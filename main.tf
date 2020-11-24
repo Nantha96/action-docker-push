@@ -22,17 +22,10 @@ resource "aws_security_group_rule" "myInstance" {
   to_port           = 65535
   protocol          = "all"
   cidr_blocks 		= ["0.0.0.0/0"]
-  security_group_id = "sg-0bbe10ba0129ef5d6"
+  security_group_id = "sg-0cab94f7ec495735f"
 }
 
-resource "aws_security_group_rule" "myInstance1" {
-  type              = "egress"
-  from_port         = 0
-  to_port           = 65535
-  protocol          = "all"
-  cidr_blocks 		= ["0.0.0.0/0"]
-  security_group_id = "sg-0bbe10ba0129ef5d6"
-}
+
 
 module "key_pair" {
 
