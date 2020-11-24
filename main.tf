@@ -16,15 +16,6 @@ provider "aws" {
   region  = "us-east-2"
 }
 
-resource "aws_security_group_rule" "myInstance" {
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 65535
-  protocol          = "all"
-  cidr_blocks 		= ["0.0.0.0/0"]
-  security_group_id = "sg-0cab94f7ec495735f"
-}
-
 
 
 module "key_pair" {
