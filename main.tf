@@ -1,14 +1,7 @@
 resource "aws_instance" "myInstance" {
-  ami           = "ami-0a54aef4ef3b5f881"
+  ami           = "ami-09558250a3419e7d0"
   instance_type = "t2.micro"
   key_name = "deployer-two"
-  user_data = <<-EOF
-			  #! /bin/bash
-			  sudo yum -y install httpd
-			  sudo service httpd start
-		      EOF
-
-  
 }		
 
 provider "aws" {
