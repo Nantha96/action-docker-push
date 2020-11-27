@@ -1,5 +1,5 @@
 resource "aws_instance" "myInstance" {
-  ami           = "ami-09558250a3419e7d0"
+  ami           = "ami-0a91cd140a1fc148a"
   instance_type = "t2.micro"
   key_name = "deployer-two"
 }		
