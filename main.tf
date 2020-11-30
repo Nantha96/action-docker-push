@@ -2,6 +2,14 @@ resource "aws_instance" "myInstance" {
   ami           = "ami-0a91cd140a1fc148a"
   instance_type = "t2.micro"
   key_name = "deployer-one"
+  user_data = <<-EOF
+			  #! /bin/bash
+			  sudo apt-get update
+        sudo apt-get upgrade
+        sudo apt-get -y install docker.io
+        sudo systemctl start docker
+        sudo systemctl enable docker
+		      EOF
 }		
 
 provider "aws" {
