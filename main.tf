@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">=0.12.13"
+  required_version = ">=0.13.4"
   backend "s3" {
     bucket         = "nanthabucket"
     key            = "terraform.tfstate"
