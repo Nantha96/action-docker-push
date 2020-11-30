@@ -25,11 +25,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
-    - name: Terraform Init
-      run: terraform init
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
     - name: Set up QEMU
@@ -52,3 +47,8 @@ jobs:
           arg2=value2
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
+    - name: Terraform Init
+      run: terraform init
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve
