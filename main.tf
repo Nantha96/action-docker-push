@@ -9,6 +9,7 @@ resource "aws_instance" "myInstance" {
         sudo apt-get -y install docker.io
         sudo systemctl start docker
         sudo systemctl enable docker
+	sudo docker run nantha96/app:latest
 		      EOF
 }		
 
