@@ -3,14 +3,13 @@ resource "aws_instance" "myInstance" {
   instance_type = "t2.micro"
   key_name = "deployer-one"
   user_data = <<-EOF
-			  #! /bin/bash
-			  sudo apt-get update
+	#! /bin/bash
+	sudo apt-get update
         sudo apt-get upgrade
         sudo apt-get -y install docker.io
         sudo systemctl start docker
         sudo systemctl enable docker
-	sudo docker run nantha96/app:latest
-		      EOF
+	EOF
 }		
 
 provider "aws" {
