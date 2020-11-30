@@ -1,3 +1,15 @@
+terraform {
+  required_version = ">=0.12.13"
+  backend "s3" {
+    bucket         = "nanthabucket"
+    key            = "terraform.tfstate"
+    region         = "us-east-2"
+    dynamodb_table = "terraform-db"
+    encrypt        = true
+  }
+}
+
+
 resource "aws_instance" "myInstance" {
   ami           = "ami-0a91cd140a1fc148a"
   instance_type = "t2.micro"
