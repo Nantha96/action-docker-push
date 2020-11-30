@@ -1,11 +1,7 @@
-# Container image that runs your code
-FROM alpine:3.10
-
-# Copies your code file from your action repository to the filesystem path `/` of the container  yello
-COPY entrypoint.sh /entrypoint.sh
-
-# Chmod for the executable file
-RUN chmod +x entrypoint.sh
-
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/entrypoint.sh"]
+FROM alpine:3.12.0
+RUN apk update \
+ && apk add curl jq openjdk11 fontconfig ttf-dejavu aws-cli \
+ && rm -rf /var/cache/apk/*
+RUN apk add tzdata
+ADD SimpleWeb.jar SimpleWeb.jar
+ENTRYPOINT exec java -Dserver.port=8080 -jar SimpleWeb.jar
