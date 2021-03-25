@@ -5,3 +5,4 @@ action-docker-push
 # some random commits
 S3 bucket created and dynamo-db created with state column
 Deleted dynamo DB
+Created dynamo Db Table Name : terraform-db ,Column Name LockID
