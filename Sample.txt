@@ -1,0 +1,1 @@
+Sample file has been added in the new branch to test the trigger event in the main branch
