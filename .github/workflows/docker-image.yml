@@ -57,5 +57,5 @@ jobs:
       run: echo $(terraform output DNS)
       
         
-    #- name: Terraform Destroy
-    #  run: terraform destroy -auto-approve
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
