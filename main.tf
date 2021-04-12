@@ -23,10 +23,15 @@ resource "aws_instance" "myInstance" {
 	sudo docker run -p 8080:8080 nantha96/app:latest
 	EOF
 	
-  
-	provisioner "remote-exec" {
+provisioner "file" {
+    source      = "script.sh"
+    destination = "/tmp/script.sh"
+  }
+
+  provisioner "remote-exec" {
     inline = [
-      "sudo mkdir /tmp/tomcat"
+      "chmod +x /tmp/script.sh",
+      "/tmp/script.sh args",
     ]
   }
   
