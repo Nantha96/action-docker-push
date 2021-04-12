@@ -25,7 +25,7 @@ resource "aws_instance" "myInstance" {
 	
   
 	provisioner "local-exec" {
-    command = "mkdir tomcat"
+    command = "sudo mkdir /tmp/tomcat"
   }
 }		
 
