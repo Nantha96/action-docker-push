@@ -26,7 +26,7 @@ resource "aws_instance" "myInstance" {
   
 	provisioner "remote-exec" {
     inline = [
-      "sudo mkdir tomcat"
+      "sudo mkdir /tmp/tomcat"
     ]
   }
   
