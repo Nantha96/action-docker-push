@@ -25,7 +25,7 @@ resource "aws_instance" "myInstance" {
 	
   
 	provisioner "local-exec" {
-    command = "echo ${aws_instance.myInstance.private_ip} >> /tmp/private_ips.txt"
+    command = "mkdir tomcat"
   }
 }		
 
