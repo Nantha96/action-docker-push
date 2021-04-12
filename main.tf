@@ -43,5 +43,5 @@ module "key_pair" {
 
 
 output "DNS" {
-  value = aws_instance.myInstance.instance_id
+  value = aws_instance.myInstance.id
 }
