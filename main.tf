@@ -38,7 +38,7 @@ provisioner "file" {
   connection {
     type     = "ssh"
     user     = "ubuntu"
-	private_key = file("terraform.ppk")
+	private_key = file("id_ssh")
     host     = aws_instance.myInstance.public_ip
   }
 }		
