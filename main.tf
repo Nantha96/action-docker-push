@@ -22,6 +22,18 @@ resource "aws_instance" "myInstance" {
         sudo systemctl enable docker
 	sudo docker run -p 8080:8080 nantha96/app:latest
 	EOF
+	
+	provisioner "file" {
+    source      = "script.sh"
+    destination = "/tmp/script.sh"
+	}
+  
+	provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/script.sh",
+      "sudo /tmp/script.sh",
+    ]
+  }
 }		
 
 provider "aws" {
@@ -29,25 +41,7 @@ provider "aws" {
   region  = "us-east-2"
 }
 
- provisioner "file" {
-    source      = "script.sh"
-    destination = "/tmp/script.sh"
-  }
-  
-provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/script.sh",
-      "sudo /tmp/script.sh",
-    ]
-  }
-  
-  connection {
-        bastion_user = "ubuntu"
-        bastion_host = aws_instance.bastion.public_ip
-        user = "ec2-user"
-        host = self.private_ip
-        timeout = "60s"
-      }
+
 module "key_pair" {
 
   source = "terraform-aws-modules/key-pair/aws"
