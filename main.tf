@@ -24,8 +24,17 @@ resource "aws_instance" "myInstance" {
 	EOF
 	
   
-	provisioner "local-exec" {
-    command = "sudo mkdir /tmp/tomcat"
+	provisioner "remote-exec" {
+    inline = [
+      "sudo mkdir tomcat"
+    ]
+  }
+  
+  connection {
+    type     = "ssh"
+    user     = "ubuntu"
+	private_key = file("sources/terraform.ppk")
+    host     = aws_instance.myInstance.public_ip
   }
 }		
 
