@@ -40,6 +40,14 @@ provisioner "remote-exec" {
       "sudo /tmp/script.sh",
     ]
   }
+  
+  connection {
+        bastion_user = "ubuntu"
+        bastion_host = aws_instance.bastion.public_ip
+        user = "ec2-user"
+        host = self.private_ip
+        timeout = "60s"
+      }
 module "key_pair" {
 
   source = "terraform-aws-modules/key-pair/aws"
