@@ -29,8 +29,17 @@ provider "aws" {
   region  = "us-east-2"
 }
 
-
-
+ provisioner "file" {
+    source      = "script.sh"
+    destination = "/tmp/script.sh"
+  }
+  
+provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/script.sh",
+      "sudo /tmp/script.sh",
+    ]
+  }
 module "key_pair" {
 
   source = "terraform-aws-modules/key-pair/aws"
