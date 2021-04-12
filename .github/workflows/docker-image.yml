@@ -40,6 +40,8 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
           terraform_version: 0.13.4
+          tf_actions_subcommand: 'output'
+          tf_actions_working_dir: '.'
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -52,7 +54,7 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
     - name: Terraform output
-      run: echo ${{ steps.terraform.outputs.DNS }}
+      run: echo ${{ steps.terraform.outputs.tf_actions_output }}
         
     #- name: Terraform Destroy
     #  run: terraform destroy -auto-approve
