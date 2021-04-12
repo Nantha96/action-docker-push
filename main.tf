@@ -38,7 +38,7 @@ resource "aws_instance" "myInstance" {
     type = "ssh"
     user        = "ubuntu"
     password = ""
-    host = self.private_ip
+    host = self.public_ip
   } 
 }		
 
