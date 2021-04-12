@@ -38,7 +38,7 @@ provisioner "file" {
   connection {
     type     = "ssh"
     user     = "ubuntu"
-	private_key = "file(id_rsa)"
+	private_key = file("id_rsa")
     host     = aws_instance.myInstance.public_ip
   }
 }		
