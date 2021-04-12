@@ -23,23 +23,12 @@ resource "aws_instance" "myInstance" {
 	sudo docker run -p 8080:8080 nantha96/app:latest
 	EOF
 	
-	provisioner "file" {
-    source      = "script.sh"
-    destination = "/tmp/script.sh"
-	}
   
 	provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/script.sh",
-      "sudo /tmp/script.sh",
+      "echo hello"
     ]
   }
-  connection {
-    type = "ssh"
-    user        = "ubuntu"
-	private_key = file("terraform-aws-modules/key-pair/aws")
-    host = self.public_ip
-  } 
 }		
 
 provider "aws" {
