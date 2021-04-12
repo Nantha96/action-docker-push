@@ -25,9 +25,7 @@ resource "aws_instance" "myInstance" {
 	
   
 	provisioner "local-exec" {
-    inline = [
-      "echo hello"
-    ]
+    command = "echo ${aws_instance.web.private_ip} >> private_ips.txt"
   }
 }		
 
