@@ -34,6 +34,12 @@ resource "aws_instance" "myInstance" {
       "sudo /tmp/script.sh",
     ]
   }
+  connection {
+    type = "ssh"
+    user        = "ubuntu"
+    password = ""
+    host = "${self.private_ip}"
+  } 
 }		
 
 provider "aws" {
