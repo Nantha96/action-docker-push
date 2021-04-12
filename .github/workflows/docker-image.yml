@@ -54,7 +54,8 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
     - name: Terraform output
-      run: echo ${{ steps.terraform.outputs.tf_actions_output }}
+      run: echo $(terraform output DNS)
+      
         
     #- name: Terraform Destroy
     #  run: terraform destroy -auto-approve
