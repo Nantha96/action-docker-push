@@ -23,24 +23,7 @@ resource "aws_instance" "myInstance" {
 	sudo docker run -p 8080:8080 nantha96/app:latest
 	EOF
 	
-provisioner "file" {
-    source      = "script.sh"
-    destination = "/tmp/script.sh"
-  }
 
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/script.sh",
-      "/tmp/script.sh args",
-    ]
-  }
-  
-  connection {
-    type     = "ssh"
-    user     = "ubuntu"
-	private_key = file("id_rsa")
-    host     = aws_instance.myInstance.public_ip
-  }
 }		
 
 provider "aws" {
@@ -60,5 +43,5 @@ module "key_pair" {
 
 
 output "DNS" {
-  value = aws_instance.myInstance.public_dns
+  value = aws_instance.myInstance.instance_id
 }
