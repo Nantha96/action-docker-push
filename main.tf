@@ -24,7 +24,7 @@ resource "aws_instance" "myInstance" {
 	EOF
 	
   
-	provisioner "remote-exec" {
+	provisioner "local-exec" {
     inline = [
       "echo hello"
     ]
