@@ -9,7 +9,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout version 1
       uses: actions/checkout@v2
@@ -67,10 +66,14 @@ jobs:
         aws-region: us-east-2
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        instance-ids: $(terraform output DNS)
+        instance-ids: i-07602d2d1a5dbf09c
 
         working-directory: /home/ubuntu
         command: "sudo docker stop $(sudo docker ps -q); sudo docker pull nantha96/app:latest; sudo docker run -p 8080:8080 nantha96/app:latest"
-        comment: Roll-out    
+        comment: Roll-out
+    - name: Print Output
+      run: |
+        echo $instanceid
+        echo ${{AWS_INSTANCE_ID}}
     #- name: Terraform Destroy
     #  run: terraform destroy -auto-approve
