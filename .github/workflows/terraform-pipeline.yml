@@ -57,7 +57,7 @@ jobs:
     - name: Terrafrom Output
       run: |
         instanceid=$(terraform output DNS)
-        echo ${{ steps.apply.output.instanceid }}
+        echo ${{ steps.apply.outputs.instanceid }}
     - name: Print Output
       env:
         test_variable: $(terraform output DNS)
@@ -68,7 +68,7 @@ jobs:
       uses: peterkimzz/aws-ssm-send-command@master
       id: ssm
       env:
-        AWS_INSTANCE_ID: ${{ steps.apply.output.instanceid }}
+        AWS_INSTANCE_ID: ${{ steps.apply.outputs.instanceid }}
       with:
         aws-region: us-east-2
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -79,5 +79,5 @@ jobs:
         command: "sudo docker stop $(sudo docker ps -q); sudo docker pull nantha96/app:latest; sudo docker run -p 8080:8080 nantha96/app:latest"
         comment: Roll-out
     
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve
+    #- name: Terraform Destroy
+    #  run: terraform destroy -auto-approve
