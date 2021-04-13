@@ -54,8 +54,21 @@ jobs:
       run: terraform apply -auto-approve
     - name: Terrafrom Output
       run: |
-        rgname=$(terraform output DNS)
-        echo $rgname
+        instanceid=$(terraform output DNS)
+        echo $instanceid
         
+    # Configure aws-ssm to run the scripts from Actions
+    - name: AWS SSM Rollout-Command
+      uses: peterkimzz/aws-ssm-send-command@master
+      id: ssm
+      with:
+        aws-region: us-east-2
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        instance-ids: $instanceid
+
+        working-directory: /home/ubuntu
+        command: "sudo docker stop $(sudo docker ps -q); sudo docker pull nantha96/app:latest; sudo docker run -p 8080:8080 nantha96/app:latest"
+        comment: Roll-out    
     #- name: Terraform Destroy
     #  run: terraform destroy -auto-approve
