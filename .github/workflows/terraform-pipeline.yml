@@ -57,5 +57,5 @@ jobs:
         rgname=$(terraform output DNS)
         echo $rgname
         
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve
+    #- name: Terraform Destroy
+    #  run: terraform destroy -auto-approve
