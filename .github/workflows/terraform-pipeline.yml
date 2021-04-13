@@ -54,7 +54,11 @@ jobs:
       run: |
         instanceid=$(terraform output DNS)
         echo $instanceid
-        
+    - name: Print Output
+      env:
+        test_variable: ${{ (terraform output DNS)}}
+      run: |
+        echo $(terraform output DNS)
     # Configure aws-ssm to run the scripts from Actions
     - name: AWS SSM Rollout-Command
       uses: peterkimzz/aws-ssm-send-command@master
@@ -70,8 +74,6 @@ jobs:
         working-directory: /home/ubuntu
         command: "sudo docker stop $(sudo docker ps -q); sudo docker pull nantha96/app:latest; sudo docker run -p 8080:8080 nantha96/app:latest"
         comment: Roll-out
-    - name: Print Output
-      run: |
-        echo $(terraform output DNS)
+    
     #- name: Terraform Destroy
     #  run: terraform destroy -auto-approve
