@@ -48,12 +48,13 @@ jobs:
     - name: Terraform Init
       run: terraform init
     - name: Terraform Apply
+      id: apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
     - name: Terrafrom Output
       run: |
         instanceid=$(terraform output DNS)
-        echo $instanceid
+        echo ${{ steps.apply.outputs.DNS }}
     - name: Print Output
       env:
         test_variable: ${{ $(terraform output DNS)}}
