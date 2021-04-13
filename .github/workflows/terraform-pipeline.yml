@@ -74,7 +74,6 @@ jobs:
         comment: Roll-out
     - name: Print Output
       run: |
-        echo $instanceid
-        echo ${{env.AWS_INSTANCE_ID}}
+        echo $(terraform output DNS)
     #- name: Terraform Destroy
     #  run: terraform destroy -auto-approve
