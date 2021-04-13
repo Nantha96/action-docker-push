@@ -1,8 +1,8 @@
-name: Docker Image CI
+name: Terraform CI/CD
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
 
 jobs:
 
@@ -40,8 +40,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
           terraform_version: 0.13.4
-          tf_actions_subcommand: 'output'
-          tf_actions_working_dir: '.'
+          terraform_wrapper: false
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -53,9 +52,10 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
-    - name: Terraform output
-      run: echo $(terraform output DNS)
-      
+    - name: Terrafrom Output
+      run: |
+        rgname=$(terraform output DNS)
+        echo $rgname
         
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
