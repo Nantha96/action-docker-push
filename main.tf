@@ -10,21 +10,99 @@ terraform {
 
 
 resource "aws_instance" "myInstance" {
-  ami           = "ami-0a91cd140a1fc148a"
+  ami           = "ami-05d72852800cbf29e"
   instance_type = "t2.micro"
+  iam_instance_profile = aws_iam_instance_profile.ssm_profie.name
   key_name = "deployer-one"
   user_data = <<-EOF
 	#! /bin/bash
-	sudo apt-get update
-        sudo apt-get upgrade
-        sudo apt-get -y install docker.io
-        sudo systemctl start docker
-        sudo systemctl enable docker
-	sudo docker run -p 8080:8080 nantha96/app:latest
+	sudo yum update -y
+	sudo yum install -y docker
+	sudo service docker start
 	EOF
 	
 
 }		
+resource "aws_iam_role" "test_role" {
+  name = "ssm_role"
+
+assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+managed_policy_arns = [aws_iam_policy.policy_two.arn]
+
+  tags = {
+      tag-key = "tag-value"
+  }
+}
+
+resource "aws_iam_policy" "policy_two" {
+  name = "policy-381967"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:DescribeAssociation",
+                "ssm:GetDeployablePatchSnapshotForInstance",
+                "ssm:GetDocument",
+                "ssm:DescribeDocument",
+                "ssm:GetManifest",
+                "ssm:GetParameter",
+                "ssm:GetParameters",
+                "ssm:ListAssociations",
+                "ssm:ListInstanceAssociations",
+                "ssm:PutInventory",
+                "ssm:PutComplianceItems",
+                "ssm:PutConfigurePackageResult",
+                "ssm:UpdateAssociationStatus",
+                "ssm:UpdateInstanceAssociationStatus",
+                "ssm:UpdateInstanceInformation"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssmmessages:CreateControlChannel",
+                "ssmmessages:CreateDataChannel",
+                "ssmmessages:OpenControlChannel",
+                "ssmmessages:OpenDataChannel"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2messages:AcknowledgeMessage",
+                "ec2messages:DeleteMessage",
+                "ec2messages:FailMessage",
+                "ec2messages:GetEndpoint",
+                "ec2messages:GetMessages",
+                "ec2messages:SendReply"
+            ],
+            "Resource": "*"
+        }
+    ]
+})
+}
+
+resource "aws_iam_instance_profile" "ssm_profie" {
+  name = "ssm_profie"
+  role = aws_iam_role.test_role.name
+}
 
 provider "aws" {
   profile = "default"
