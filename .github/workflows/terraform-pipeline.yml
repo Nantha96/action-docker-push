@@ -57,7 +57,7 @@ jobs:
         echo ${{ steps.apply.outputs.DNS }}
     - name: Print Output
       env:
-        test_variable: ${{ $(terraform output DNS)}}
+        test_variable: $(terraform output DNS)
       run: |
         echo $(terraform output DNS)
     # Configure aws-ssm to run the scripts from Actions
