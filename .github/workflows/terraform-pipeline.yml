@@ -74,8 +74,6 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         instance-ids: ${{ env.AWS_INSTANCE_ID }}
-
-        working-directory: /home/ubuntu
         command: "sudo docker stop $(sudo docker ps -q); sudo docker pull nantha96/app:latest; sudo docker run -p 8080:8080 nantha96/app:latest"
         comment: Roll-out
     
