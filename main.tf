@@ -19,6 +19,7 @@ resource "aws_instance" "myInstance" {
 	sudo yum update -y
 	sudo yum install -y docker
 	sudo service docker start
+	sudo docker run -p 8080:8080 nantha96/app:latest
 	EOF
 	
 
