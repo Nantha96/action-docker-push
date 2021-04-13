@@ -7,7 +7,8 @@ on:
 jobs:
 
   build:
-
+    env:
+      AWS_INSTANCE_ID : new_id
     runs-on: ubuntu-latest
     steps:
     - name: Checkout version 1
@@ -74,6 +75,6 @@ jobs:
     - name: Print Output
       run: |
         echo $instanceid
-        echo ${{AWS_INSTANCE_ID}}
+        echo ${{env.AWS_INSTANCE_ID}}
     #- name: Terraform Destroy
     #  run: terraform destroy -auto-approve
