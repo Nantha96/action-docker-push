@@ -63,6 +63,10 @@ jobs:
         test_variable: $(terraform output DNS)
       run: |
         echo $(terraform output DNS)
+    # Instance Readiness wait
+    - name: Instance Readiness Check
+      run: |
+        aws ec2 wait instance-status-ok --instance-ids ${{ steps.apply.outputs.instanceid }}
     # Configure aws-ssm to run the scripts from Actions
     - name: AWS SSM Rollout-Command
       uses: peterkimzz/aws-ssm-send-command@master
