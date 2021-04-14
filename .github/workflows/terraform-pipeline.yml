@@ -81,5 +81,5 @@ jobs:
     - name: Get the outputs
       run: echo "The Command id is ${{ steps.ssm.outputs.command-id }}"
     
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve
+    #- name: Terraform Destroy
+    #  run: terraform destroy -auto-approve
